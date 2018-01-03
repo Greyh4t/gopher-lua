@@ -161,11 +161,12 @@ func (nm LNumber) Format(f fmt.State, c rune) {
 type LTable struct {
 	Metatable LValue
 
-	array   []LValue
-	dict    map[LValue]LValue
-	strdict map[string]LValue
-	keys    []LValue
-	k2i     map[LValue]int
+	array    []LValue
+	dict     map[LValue]LValue
+	strdict  map[string]LValue
+	keys     []LValue
+	k2i      map[LValue]int
+	readonly bool
 }
 
 func (tb *LTable) String() string                     { return fmt.Sprintf("table: %p", tb) }
@@ -173,6 +174,7 @@ func (tb *LTable) Type() LValueType                   { return LTTable }
 func (tb *LTable) assertFloat64() (float64, bool)     { return 0, false }
 func (tb *LTable) assertString() (string, bool)       { return "", false }
 func (tb *LTable) assertFunction() (*LFunction, bool) { return nil, false }
+func (tb *LTable) SetReadOnly(status bool)            { tb.readonly = status }
 
 type LFunction struct {
 	IsG       bool
